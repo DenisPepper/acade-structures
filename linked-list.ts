@@ -7,6 +7,7 @@ interface IListList {
   head: ListItem | null;
   tail: ListItem | null;
   add(value: ListItem): void;
+  toArray(): ListItem[];
 }
 
 class LinkedList implements IListList {
@@ -31,4 +32,23 @@ class LinkedList implements IListList {
 
     this.tail = listItem;
   }
+
+  toArray(): ListItem[] {
+    const items: ListItem[] = [];
+
+    let item = this.head;
+    while (item) {
+      items.push(item);
+      item = item.next;
+    }
+
+    return items;
+  }
 }
+
+//test
+const list = new LinkedList();
+list.add('one');
+list.add('two');
+list.add('three');
+console.log(list.toArray());
