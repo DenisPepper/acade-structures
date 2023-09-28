@@ -10,6 +10,8 @@ interface IListList {
   addFirst(value: any): void;
   delete(value: any): void;
   toArray(): ListItem[];
+  getHead(): ListItem | null;
+  getTail(): ListItem | null;
 }
 
 class LinkedList implements IListList {
@@ -49,9 +51,7 @@ class LinkedList implements IListList {
     /*
     0. список может быть пустым или содержать единственный элемент
     1. список может не содержать удаляемого значения
-    2. удаляем первый не единственный элемеент
-    3. удаляем последний не единственный элемент
-    4. удаляем средний элемент
+    5. удаление нескольких одинаковых значений
     */
 
     // 0-е условие, когда список пустой
@@ -66,27 +66,25 @@ class LinkedList implements IListList {
       return;
     }
 
-    // 2-е условие, удаляем первый не единственный элемеент
-    if (this.head.value === value) {
-      this.head = this.head.next;
-      return;
-    }
+    let item: ListItem | null = this.head;
+    let prev: ListItem | null = null;
 
-    let head: ListItem | null = this.head;
-    let current: ListItem | null = this.head.next;
-
-    while (current) {
-      if (current.value === value) {
-        //3. удаляем последний не единственный элемент
-        if (current === this.tail) {
-          this.tail = head;
+    while (item) {
+      if (item.value === value) {
+        if (item === this.head) {
+          // 5.1 когда удаляем первый
+          this.head = item.next;
+        } else if (item === this.tail && prev) {
+          // 5.3 когда удаляем последний
+          this.tail = prev;
+          this.tail.next = null;
+        } else if (prev) {
+          // 5.2 когда удаляем средний
+          prev.next = item.next;
         }
-        //4. удаляем средний элемент
-        head.next = current.next;
-        return;
       }
-      head = current;
-      current = current.next;
+      prev = item;
+      item = item.next;
     }
   }
 
@@ -101,15 +99,26 @@ class LinkedList implements IListList {
 
     return items;
   }
+
+  getHead() {
+    return this.head;
+  }
+
+  getTail() {
+    return this.tail;
+  }
 }
 
 //test
 const list = new LinkedList();
-list.add('one');
-list.add('two');
 list.add('three');
-list.addFirst('first');
+list.add('three');
+list.add('one');
+list.add('three');
+list.add('two');
 console.log(list.toArray());
+console.log({ head: list.getHead(), tail: list.getTail() });
 
 list.delete('three');
 console.log(list.toArray());
+console.log({ head: list.getHead(), tail: list.getTail() });
