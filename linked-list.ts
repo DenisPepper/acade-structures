@@ -116,7 +116,7 @@ class LinkedList implements IListList {
 
     let item = this.head;
     while (item) {
-      items.push(item);
+      items.push({ ...item });
       item = item.next;
     }
 
