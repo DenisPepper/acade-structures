@@ -8,6 +8,7 @@ interface IListList {
   tail: ListItem | null;
   add(value: any): void;
   addFirst(value: any): void;
+  addAfter(value: any, afterValue: any): void;
   delete(value: any): void;
   toArray(): ListItem[];
   getHead(): ListItem | null;
@@ -46,6 +47,44 @@ class LinkedList implements IListList {
 
     const listItem: ListItem = { value, next: this.head };
     this.head = listItem;
+  }
+
+  addAfter(value: any, afterValue: any): void {
+    /*
+      1. вставка в список с единственным элементом
+      2. вставка в список между элементами
+      3. вставка в конец списка
+    */
+
+    // когда список пустой
+    if (!this.head) {
+      return;
+    }
+
+    const item: ListItem = { value, next: null };
+
+    // 1. когда список имеет единственный элемент
+    if (this.head.value === afterValue && this.head === this.tail) {
+      this.head.next = item;
+      this.tail = item;
+      return;
+    }
+
+    // 2 и 3. вставка в середину и конец списка
+    let current: ListItem | null = this.head;
+
+    while (current) {
+      if (current.value === afterValue) {
+        if (current === this.tail) {
+          this.tail = item;
+        } else {
+          item.next = current.next;
+        }
+        current.next = item;
+        return;
+      }
+      current = current.next;
+    }
   }
 
   find(value: any): ListItem | null {
@@ -134,23 +173,13 @@ class LinkedList implements IListList {
 
 //test
 const list = new LinkedList();
-list.add('three');
-list.add('three');
-list.add('three');
-list.add('three');
 list.add('one');
-list.add('three');
-list.add('three');
-list.add('three');
-list.add('three');
-list.add('two');
-list.add('three');
-list.add('three');
-list.add('three');
-list.add('three');
+/* list.add('two');
+list.add('three'); */
+
 console.log(list.toArray());
 console.log({ head: list.getHead(), tail: list.getTail() });
 
-list.delete('three');
+list.addAfter('new', 'one');
 console.log(list.toArray());
 console.log({ head: list.getHead(), tail: list.getTail() });
