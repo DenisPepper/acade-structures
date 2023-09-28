@@ -66,25 +66,29 @@ class LinkedList implements IListList {
       return;
     }
 
-    let item: ListItem | null = this.head;
+    let current: ListItem | null = this.head;
     let prev: ListItem | null = null;
 
-    while (item) {
-      if (item.value === value) {
-        if (item === this.head) {
-          // 5.1 когда удаляем первый
-          this.head = item.next;
-        } else if (item === this.tail && prev) {
-          // 5.3 когда удаляем последний
-          this.tail = prev;
-          this.tail.next = null;
-        } else if (prev) {
-          // 5.2 когда удаляем средний
-          prev.next = item.next;
+    while (current) {
+      if (current.value === value) {
+        if (current === this.head) {
+          // 5.1 удаляем первый
+          this.head = current.next;
+        } else if (current === this.tail) {
+          // 5.3 удаляем последний
+          if (prev) {
+            this.tail = prev;
+            this.tail.next = null;
+          }
+        } else {
+          // 5.2 удаляем средний
+          prev && (prev.next = current.next);
+          current = current.next;
+          continue;
         }
       }
-      prev = item;
-      item = item.next;
+      prev = current;
+      current = current.next;
     }
   }
 
@@ -113,9 +117,18 @@ class LinkedList implements IListList {
 const list = new LinkedList();
 list.add('three');
 list.add('three');
+list.add('three');
+list.add('three');
 list.add('one');
 list.add('three');
+list.add('three');
+list.add('three');
+list.add('three');
 list.add('two');
+list.add('three');
+list.add('three');
+list.add('three');
+list.add('three');
 console.log(list.toArray());
 console.log({ head: list.getHead(), tail: list.getTail() });
 
