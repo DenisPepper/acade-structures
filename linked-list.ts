@@ -47,15 +47,47 @@ class LinkedList implements IListList {
 
   delete(value: any): void {
     /*
-    0. список может быть пустым
+    0. список может быть пустым или содержать единственный элемент
     1. список может не содержать удаляемого значения
-    2. удаляем первый элемеент
-    3. удаляем последний элемент
+    2. удаляем первый не единственный элемеент
+    3. удаляем последний не единственный элемент
     4. удаляем средний элемент
     */
 
-    
-   
+    // 0-е условие, когда список пустой
+    if (!this.head) {
+      return;
+    }
+
+    // 0-е условие, когда список имеет единственный элемент
+    if (this.head.value === value && this.head === this.tail) {
+      this.head = null;
+      this.tail = null;
+      return;
+    }
+
+    // 2-е условие, удаляем первый не единственный элемеент
+    if (this.head.value === value) {
+      this.head = this.head.next;
+      return;
+    }
+
+    let head: ListItem | null = this.head;
+    let current: ListItem | null = this.head.next;
+
+    while (current) {
+      if (current.value === value) {
+        //3. удаляем последний не единственный элемент
+        if (current === this.tail) {
+          this.tail = head;
+        }
+        //4. удаляем средний элемент
+        head.next = current.next;
+        return;
+      }
+      head = current;
+      current = current.next;
+    }
   }
 
   toArray(): ListItem[] {
@@ -76,5 +108,8 @@ const list = new LinkedList();
 list.add('one');
 list.add('two');
 list.add('three');
-list.addFirst('firse element here');
+list.addFirst('first');
+console.log(list.toArray());
+
+list.delete('three');
 console.log(list.toArray());
