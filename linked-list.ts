@@ -6,7 +6,8 @@ interface ListItem {
 interface IListList {
   head: ListItem | null;
   tail: ListItem | null;
-  add(value: ListItem): void;
+  add(value: any): void;
+  addFirst(value: any): void;
   toArray(): ListItem[];
 }
 
@@ -33,6 +34,16 @@ class LinkedList implements IListList {
     this.tail = listItem;
   }
 
+  addFirst(value: any) {
+    if (!this.head) {
+      this.add(value);
+      return;
+    }
+
+    const listItem: ListItem = { value, next: this.head };
+    this.head = listItem;
+  }
+
   toArray(): ListItem[] {
     const items: ListItem[] = [];
 
@@ -51,4 +62,6 @@ const list = new LinkedList();
 list.add('one');
 list.add('two');
 list.add('three');
+list.addFirst('firse element here');
 console.log(list.toArray());
+
