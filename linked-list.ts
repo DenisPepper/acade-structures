@@ -12,6 +12,7 @@ interface IListList {
   toArray(): ListItem[];
   getHead(): ListItem | null;
   getTail(): ListItem | null;
+  find(value: any): ListItem | null;
 }
 
 class LinkedList implements IListList {
@@ -45,6 +46,24 @@ class LinkedList implements IListList {
 
     const listItem: ListItem = { value, next: this.head };
     this.head = listItem;
+  }
+
+  find(value: any): ListItem | null {
+    // 0-е условие, когда список пустой
+    if (!this.head) {
+      return null;
+    }
+
+    let current: ListItem | null = this.head;
+    let result: ListItem | null = null;
+    while (current) {
+      if (current.value === value) {
+        result = current;
+        break;
+      }
+      current = current.next;
+    }
+    return result ? { ...result } : null;
   }
 
   delete(value: any): void {
