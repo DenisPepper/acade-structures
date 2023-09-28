@@ -105,11 +105,11 @@ class LinkedList implements IListList {
   }
 
   getHead() {
-    return this.head;
+    return this.head ? { ...this.head } : null;
   }
 
   getTail() {
-    return this.tail;
+    return this.tail ? { ...this.tail } : null;
   }
 }
 
