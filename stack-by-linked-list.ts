@@ -22,4 +22,16 @@ export class Stack implements IStack {
   pop() {
     return this.items.removeFirst();
   }
+
+  toArray(): any[] {
+    return this.items.toArray();
+  }
 }
+
+//test
+const stack = new Stack();
+stack.push('one');
+stack.push('two');
+stack.push('three');
+
+console.log(stack.toArray());

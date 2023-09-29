@@ -191,10 +191,8 @@ export class LinkedList implements IListList {
 }
 
 //test
-const list = new LinkedList();
+/* const list = new LinkedList();
 list.add('one');
-/* list.add('two');
-list.add('three'); */
 
 console.log(list.toArray());
 console.log({ head: list.getHead(), tail: list.getTail() });
@@ -202,3 +200,4 @@ console.log({ head: list.getHead(), tail: list.getTail() });
 list.addAfter('new', 'one');
 console.log(list.toArray());
 console.log({ head: list.getHead(), tail: list.getTail() });
+ */
