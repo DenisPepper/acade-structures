@@ -1,25 +1,25 @@
-interface ListItem {
+export interface IListItem {
   value: any;
-  next: ListItem | null;
+  next: IListItem | null;
 }
 
 interface IListList {
-  head: ListItem | null;
-  tail: ListItem | null;
+  head: IListItem | null;
+  tail: IListItem | null;
   add(value: any): void;
   addFirst(value: any): void;
-  removeFirst(): ListItem | null;
+  removeFirst(): IListItem | null;
   addAfter(value: any, afterValue: any): void;
   delete(value: any): void;
-  toArray(): ListItem[];
-  getHead(): ListItem | null;
-  getTail(): ListItem | null;
-  find(value: any): ListItem | null;
+  toArray(): IListItem[];
+  getHead(): IListItem | null;
+  getTail(): IListItem | null;
+  find(value: any): IListItem | null;
 }
 
 export class LinkedList implements IListList {
-  head: ListItem | null;
-  tail: ListItem | null;
+  head: IListItem | null;
+  tail: IListItem | null;
 
   constructor() {
     this.head = null;
@@ -27,7 +27,7 @@ export class LinkedList implements IListList {
   }
 
   add(value: any): void {
-    const listItem: ListItem = { value, next: null };
+    const listItem: IListItem = { value, next: null };
 
     if (!this.head) {
       this.head = listItem;
@@ -46,11 +46,11 @@ export class LinkedList implements IListList {
       return;
     }
 
-    const listItem: ListItem = { value, next: this.head };
+    const listItem: IListItem = { value, next: this.head };
     this.head = listItem;
   }
 
-  removeFirst(): ListItem | null {
+  removeFirst(): IListItem | null {
     // когда список пустой
     if (!this.head) {
       return null;
@@ -80,7 +80,7 @@ export class LinkedList implements IListList {
       return;
     }
 
-    const item: ListItem = { value, next: null };
+    const item: IListItem = { value, next: null };
 
     // 1. когда список имеет единственный элемент
     if (this.head.value === afterValue && this.head === this.tail) {
@@ -90,7 +90,7 @@ export class LinkedList implements IListList {
     }
 
     // 2 и 3. вставка в середину и конец списка
-    let current: ListItem | null = this.head;
+    let current: IListItem | null = this.head;
 
     while (current) {
       if (current.value === afterValue) {
@@ -106,14 +106,14 @@ export class LinkedList implements IListList {
     }
   }
 
-  find(value: any): ListItem | null {
+  find(value: any): IListItem | null {
     // 0-е условие, когда список пустой
     if (!this.head) {
       return null;
     }
 
-    let current: ListItem | null = this.head;
-    let result: ListItem | null = null;
+    let current: IListItem | null = this.head;
+    let result: IListItem | null = null;
     while (current) {
       if (current.value === value) {
         result = current;
@@ -143,8 +143,8 @@ export class LinkedList implements IListList {
       return;
     }
 
-    let current: ListItem | null = this.head;
-    let prev: ListItem | null = null;
+    let current: IListItem | null = this.head;
+    let prev: IListItem | null = null;
 
     while (current) {
       if (current.value === value) {
@@ -169,8 +169,8 @@ export class LinkedList implements IListList {
     }
   }
 
-  toArray(): ListItem[] {
-    const items: ListItem[] = [];
+  toArray(): IListItem[] {
+    const items: IListItem[] = [];
 
     let item = this.head;
     while (item) {
