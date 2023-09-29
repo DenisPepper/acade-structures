@@ -3,6 +3,7 @@ interface IStack {
   push(value: any): void;
   pop(): any;
   isEmpty(): boolean;
+  toArray(): any[];
 }
 
 class Stack implements IStack {
@@ -22,5 +23,9 @@ class Stack implements IStack {
 
   isEmpty(): boolean {
     return this.items.length === 0;
+  }
+
+  toArray(): any[] {
+    return [...this.items];
   }
 }
