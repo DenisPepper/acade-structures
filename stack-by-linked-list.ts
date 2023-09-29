@@ -19,5 +19,7 @@ export class Stack implements IStack {
     this.items.addFirst(value);
   }
 
-  
+  pop() {
+    return this.items.removeFirst();
+  }
 }

@@ -8,6 +8,7 @@ interface IListList {
   tail: ListItem | null;
   add(value: any): void;
   addFirst(value: any): void;
+  removeFirst(): ListItem | null;
   addAfter(value: any, afterValue: any): void;
   delete(value: any): void;
   toArray(): ListItem[];
@@ -47,6 +48,24 @@ export class LinkedList implements IListList {
 
     const listItem: ListItem = { value, next: this.head };
     this.head = listItem;
+  }
+
+  removeFirst(): ListItem | null {
+    // когда список пустой
+    if (!this.head) {
+      return null;
+    }
+
+    const item = this.head;
+    // когда список имеет единственный элемент
+    if (this.head === this.tail) {
+      this.head = null;
+      this.tail = null;
+    } else {
+      // список состоит из нескольких элементов
+      this.head = this.head.next;
+    }
+    return item;
   }
 
   addAfter(value: any, afterValue: any): void {
