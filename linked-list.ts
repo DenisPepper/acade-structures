@@ -16,7 +16,7 @@ interface IListList {
   find(value: any): ListItem | null;
 }
 
-class LinkedList implements IListList {
+export class LinkedList implements IListList {
   head: ListItem | null;
   tail: ListItem | null;
 
