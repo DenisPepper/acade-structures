@@ -2,6 +2,7 @@ interface IStack {
   items: any[];
   push(value: any): void;
   pop(): any;
+  isEmpty(): boolean;
 }
 
 class Stack implements IStack {
@@ -17,5 +18,9 @@ class Stack implements IStack {
 
   pop() {
     return this.items.pop();
+  }
+
+  isEmpty(): boolean {
+    return this.items.length === 0;
   }
 }
