@@ -1,7 +1,7 @@
 import { LinkedList } from './linked-list';
 
 interface IStack {
-  items: LinkedList;
+  readonly items: LinkedList;
   readonly length: number;
   push(value: any): void;
   pop(): any;
@@ -47,4 +47,4 @@ stack.push('one');
 stack.push('two');
 stack.push('three');
 
-console.log(stack.toArray());
+console.log(stack.items);
