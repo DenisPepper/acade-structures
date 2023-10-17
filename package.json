@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "tsc": "npx tsc"
+  },
   "devDependencies": {
     "typescript": "5.2.2"
   }

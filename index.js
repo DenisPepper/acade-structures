@@ -1,10 +1,12 @@
-import { Tree } from './tree.js';
+import { Operation } from './operations-chain-management.js';
 
-// тесты
-const tree = new Tree('Кровать КМ-1');
-const pack1 = tree.root.addNode('пакет 1/2');
-const pack2 = tree.root.addNode('пакет 2/2');
-const bl = pack1.node?.addNode('Боковина левая');
-const br = pack1.node?.addNode('Боковина правая');
-const iz = pack2.node?.addNode('Изголовье');
-console.dir(tree);
+
+const cutDsp = new Operation();
+cutDsp.addComponent('output', 'Боковина кровати', 2);
+cutDsp.addComponent('output', 'Изголовье', 1);
+cutDsp.addComponent('output', 'Изножье', 1);
+
+console.log(opr)
+
+const drillDsp = new Operation();
+drillDsp.addComponent();

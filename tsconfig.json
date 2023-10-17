@@ -1,5 +1,5 @@
 {
-  "files": ["./tree.ts"],
+  "files": ["./operations-chain-management.ts"],
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext"
