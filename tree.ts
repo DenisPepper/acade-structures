@@ -1,4 +1,9 @@
-interface INode {}
+interface INode {
+  parent: INode | null;
+  children: INode[];
+  addNode(node: INode): void;
+  removeNode(index: number): INode | null;
+}
 
 class Node implements INode {}
 
