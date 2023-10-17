@@ -3,41 +3,69 @@
 */
 type Position = 'input' | 'output';
 
+interface Point {
+  operation: Operation;
+  index: number;
+}
+
+interface OperationComponent {
+  component: Component;
+  index: number;
+}
+
 export class Component {
-  private name: string;
-  private count: number;
+  name: string;
+  count: number;
 
   constructor(name: string = 'new component', count: number = 1) {
     this.name = name;
     this.count = count;
   }
-
-  public setName(name: string): void {
-    this.name = name;
-  }
-
-  public setCount(count: number):void {
-    this.count = count;
-  }
 }
 
 export class Operation {
+  name: string;
+  count: number; // TODO: операции могут быть пакетные и поточные
   private inputComponents: Component[];
   private outputComponents: Component[];
 
-  constructor() {
+  constructor(name: string, count: number = 1) {
+    this.name = name;
+    this.count = count;
     this.inputComponents = [];
     this.outputComponents = [];
   }
 
-  addComponent(position: Position, name: string, count: number): Component {
+  addComponent(
+    position: Position,
+    name: string,
+    count: number
+  ): OperationComponent {
     const component = new Component(name, count);
+    let index: number;
     if (position === 'input') {
       this.inputComponents.push(component);
+      index = this.inputComponents.length - 1;
     }
     if (position === 'output') {
       this.outputComponents.push(component);
+      index = this.outputComponents.length - 1;
     }
-    return component;
+    return { component, index };
+  }
+}
+
+export class Route {
+  name: string;
+  private operations: Operation[];
+
+  constructor() {
+    this.operations = [];
+  }
+
+  addPoint(name: string, count: number): Point {
+    const operation = new Operation(name, count);
+    this.operations.push(operation);
+    return { operation, index: this.operations.length - 1 };
   }
 }
