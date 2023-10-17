@@ -1,25 +1,30 @@
 interface INode {
-  parent: INode | null;
+  parent: NodeType;
   children: INode[];
-  addNode(node: INode): void;
-  removeNode(index: number): INode | null;
+  value: any;
+  addNode(value: any): void;
+  removeNode(index: number): NodeType;
 }
+
+type NodeType = INode | null;
 
 class Node implements INode {
   children: INode[];
-  parent: INode | null;
+  parent: NodeType;
+  value: any;
 
-  constructor(parent = null) {
+  constructor(value: any, parent: NodeType = null) {
     this.parent = parent;
     this.children = [];
+    this.value = value;
   }
 
-  addNode(node: INode): void {
-    this.children.push(node);
+  addNode(value): void {
+    this.children.push(new Node(value, this));
   }
 
-  removeNode(index: number): INode | null {
-    let node: INode | null = null;
+  removeNode(index: number): NodeType {
+    let node: NodeType = null;
     this.children = this.children.filter((el, i) => {
       if (i === index) node = el;
       return i !== index;
@@ -32,7 +37,7 @@ class Node implements INode {
 export class Tree {
   root: Node;
 
-  constructor() {
-    this.root = new Node();
+  constructor(rootValue: any) {
+    this.root = new Node(rootValue);
   }
 }
