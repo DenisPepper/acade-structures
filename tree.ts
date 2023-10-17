@@ -2,8 +2,13 @@ interface INode {
   parent: NodeType;
   children: INode[];
   value: any;
-  addNode(value: any): NodeType;
-  removeNode(index: number): NodeType;
+  addNode(value: any): ITreeNode;
+  removeNode(index: number): ITreeNode;
+}
+
+interface ITreeNode {
+  node: NodeType;
+  index: number;
 }
 
 type NodeType = INode | null;
@@ -19,20 +24,19 @@ class Node implements INode {
     this.value = value;
   }
 
-  addNode(value): NodeType {
+  addNode(value: any): ITreeNode {
     const node = new Node(value, this);
     this.children.push(node);
-    return node;
+    return { node, index: this.children.length - 1 };
   }
 
-  removeNode(index: number): NodeType {
+  removeNode(index: number): ITreeNode {
     let node: NodeType = null;
     this.children = this.children.filter((el, i) => {
       if (i === index) node = el;
       return i !== index;
     });
-
-    return node;
+    return { node, index };
   }
 }
 
@@ -48,3 +52,4 @@ export class Tree {
 const tree = new Tree('Кровать КМ-1');
 const pack1 = tree.root.addNode('пакет 1/2');
 const pack2 = tree.root.addNode('пакет 2/2');
+console.log(pack1, pack2);
