@@ -46,6 +46,10 @@ export class Tree {
   constructor(rootValue: any) {
     this.root = new Node(rootValue);
   }
+
+  add(path: string) {}
+
+  remove(path: string) {}
 }
 
 /*
