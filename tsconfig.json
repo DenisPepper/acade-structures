@@ -1,0 +1,7 @@
+{
+  "files": ["./tree.ts"],
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext"
+  }
+}
