@@ -1,11 +1,14 @@
-/*
-    управление цепочкой операций
-*/
 export class Component {
     name;
     count;
-    constructor(name, count = 1) {
+    constructor(name = 'new component', count = 1) {
         this.name = name;
+        this.count = count;
+    }
+    setName(name) {
+        this.name = name;
+    }
+    setCount(count) {
         this.count = count;
     }
 }

@@ -1,23 +1,25 @@
 /*
-    управление цепочкой операций 
+  управление цепочкой операций 
 */
+type Position = 'input' | 'output';
 
-interface IComponent {
-  name: string;
-  count: number;
-}
+export class Component {
+  private name: string;
+  private count: number;
 
-export class Component implements IComponent {
-  name: string;
-  count: number;
-
-  constructor(name: string, count: number = 1) {
+  constructor(name: string = 'new component', count: number = 1) {
     this.name = name;
     this.count = count;
   }
-}
 
-type Position = 'input' | 'output';
+  public setName(name: string): void {
+    this.name = name;
+  }
+
+  public setCount(count: number):void {
+    this.count = count;
+  }
+}
 
 export class Operation {
   private inputComponents: Component[];
@@ -39,4 +41,3 @@ export class Operation {
     return component;
   }
 }
-
