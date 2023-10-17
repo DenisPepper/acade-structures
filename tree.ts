@@ -2,7 +2,7 @@ interface INode {
   parent: NodeType;
   children: INode[];
   value: any;
-  addNode(value: any): void;
+  addNode(value: any): NodeType;
   removeNode(index: number): NodeType;
 }
 
@@ -19,8 +19,10 @@ class Node implements INode {
     this.value = value;
   }
 
-  addNode(value): void {
-    this.children.push(new Node(value, this));
+  addNode(value): NodeType {
+    const node = new Node(value, this);
+    this.children.push(node);
+    return node;
   }
 
   removeNode(index: number): NodeType {
