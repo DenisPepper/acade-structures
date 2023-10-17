@@ -48,4 +48,8 @@ export class Tree {
   }
 }
 
-// compile this module: npx tsc tree.ts
+/*
+1. add this ts file to files array in tsconfig.json
+
+2. compile this module: npx tsc
+*/
