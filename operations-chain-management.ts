@@ -26,6 +26,7 @@ export class Component {
 export class Operation {
   name: string;
   count: number; // TODO: операции могут быть пакетные и поточные
+  prev: Operation; // TODO: Входные компоненты могут поступать только из предыдущих операций
   private inputComponents: Component[];
   private outputComponents: Component[];
 
@@ -58,6 +59,7 @@ export class Operation {
 export class Route {
   name: string;
   private operations: Operation[];
+  // TODO: нужен список всех выходных компонентов с непотребленным количеством
 
   constructor() {
     this.operations = [];
