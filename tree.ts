@@ -6,6 +6,7 @@ interface INode {
   removeNode(index: number): ITreeNode;
   findByDepth(value: any): Node | undefined;
   findByBreadth(value: any): Node | undefined;
+  findByBreadth2(value: any): Node | undefined;
 }
 
 interface ITreeNode {
@@ -58,10 +59,21 @@ class Node implements INode {
     while (children.length > 0) {
       for (const child of children) {
         if (child.value === value) return child;
-        nestedchildren = [...nestedchildren, ...child.children];
+        child.children.forEach((item) => nestedchildren.push(item));
       }
       children = [...nestedchildren];
       nestedchildren = [];
+    }
+  }
+
+  findByBreadth2(value: any): Node {
+    if (this.value === value) return this;
+    for (const child of this.children) {
+      if (child.value === value) return child;
+    }
+    for (const child of this.children) {
+      const nestedNode = child.findByBreadth2(value);
+      if (nestedNode) return nestedNode;
     }
   }
 }
@@ -95,7 +107,7 @@ root.addNode('/stage 3');
 
 //console.log(root.find('/2-2-1'));
 
-console.log(root.findByBreadth('/2-2-1'));
+console.log(root.findByBreadth2('/2-3'));
 
 /*
 1 add this ts file to files array in tsconfig.json

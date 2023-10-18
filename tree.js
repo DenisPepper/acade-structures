@@ -21,30 +21,44 @@ class Node {
         });
         return { node, index };
     }
-    find(value) {
-        console.log(this.value);
+    findByDepth(value) {
         if (this.value === value)
             return this;
         for (const child of this.children) {
-            const nestedNode = child.find(value);
+            const nestedNode = child.findByDepth(value);
             if (nestedNode)
                 return nestedNode;
         }
     }
-    findBy(value) {
+    findByBreadth(value) {
         if (this.value === value)
             return this;
         let children = this.children;
         let nestedchildren = [];
         while (children.length > 0) {
             for (const child of children) {
-                console.log(child.value);
                 if (child.value === value)
                     return child;
-                nestedchildren = [...nestedchildren, ...child.children];
+                child.children.forEach((item) => nestedchildren.push(item));
             }
             children = [...nestedchildren];
             nestedchildren = [];
+        }
+    }
+    findByBreadth2(value) {
+        if (this.value === value) {
+            console.log(this.value);
+        }
+        if (this.value === value)
+            return this;
+        for (const child of this.children) {
+            if (child.value === value)
+                return child;
+        }
+        for (const child of this.children) {
+            const nestedNode = child.findByBreadth2(value);
+            if (nestedNode)
+                return nestedNode;
         }
     }
 }
@@ -56,7 +70,7 @@ export class Tree {
     add(path) { }
     remove(path) { }
     find(value) {
-        return this.root.find(value);
+        return this.root.findByDepth(value);
     }
 }
 const tree = new Tree('root');
@@ -70,7 +84,7 @@ stage2?.addNode('/2-2').node.addNode('/2-2-1');
 stage2?.addNode('/2-3');
 root.addNode('/stage 3');
 //console.log(root.find('/2-2-1'));
-console.log(root.findBy('/2-2-1'));
+console.log(root.findByBreadth2('/2-3'));
 /*
 1 add this ts file to files array in tsconfig.json
 
