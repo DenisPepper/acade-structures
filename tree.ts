@@ -4,7 +4,8 @@ interface INode {
   value: any;
   addNode(value: any): ITreeNode;
   removeNode(index: number): ITreeNode;
-  find(value: any): Node | undefined;
+  findByDepth(value: any): Node | undefined;
+  findByBreadth(value: any): Node | undefined;
 }
 
 interface ITreeNode {
@@ -40,13 +41,27 @@ class Node implements INode {
     return { node, index };
   }
 
-  find(value: any): Node | undefined {
-    if (this.value === value) {
-      return this;
-    }
+  findByDepth(value: any): Node | undefined {
+    if (this.value === value) return this;
     for (const child of this.children) {
-      const nestedNode = child.find(value);
+      const nestedNode = child.findByDepth(value);
       if (nestedNode) return nestedNode;
+    }
+  }
+
+  findByBreadth(value: any): Node | undefined {
+    if (this.value === value) return this;
+
+    let children: Node[] = this.children;
+    let nestedchildren: Node[] = [];
+
+    while (children.length > 0) {
+      for (const child of children) {
+        if (child.value === value) return child;
+        nestedchildren = [...nestedchildren, ...child.children];
+      }
+      children = [...nestedchildren];
+      nestedchildren = [];
     }
   }
 }
@@ -63,7 +78,7 @@ export class Tree {
   remove(path: string) {}
 
   find(value: any): Node | undefined {
-    return this.root.find(value);
+    return this.root.findByDepth(value);
   }
 }
 
@@ -74,11 +89,13 @@ stage1?.addNode('/1-1');
 stage1?.addNode('/1-2');
 const stage2 = root.addNode('/stage 2').node;
 stage2?.addNode('/2-1');
-stage2?.addNode('/2-2');
+stage2?.addNode('/2-2').node.addNode('/2-2-1');
 stage2?.addNode('/2-3');
 root.addNode('/stage 3');
 
-console.log(root.find('/1-2'));
+//console.log(root.find('/2-2-1'));
+
+console.log(root.findByBreadth('/2-2-1'));
 
 /*
 1 add this ts file to files array in tsconfig.json
