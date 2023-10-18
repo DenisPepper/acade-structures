@@ -4,6 +4,7 @@ interface INode {
   value: any;
   addNode(value: any): ITreeNode;
   removeNode(index: number): ITreeNode;
+  find(value: any): Node | undefined;
 }
 
 interface ITreeNode {
@@ -38,6 +39,16 @@ class Node implements INode {
     });
     return { node, index };
   }
+
+  find(value: any): Node | undefined {
+    if (this.value === value) {
+      return this;
+    }
+    for (const child of this.children) {
+      const nestedNode = child.find(value);
+      if (nestedNode) return nestedNode;
+    }
+  }
 }
 
 export class Tree {
@@ -50,10 +61,27 @@ export class Tree {
   add(path: string) {}
 
   remove(path: string) {}
+
+  find(value: any): Node | undefined {
+    return this.root.find(value);
+  }
 }
 
-/*
-1. add this ts file to files array in tsconfig.json
+const tree = new Tree('root');
+const root = tree.root;
+const stage1 = root.addNode('/stage 1').node;
+stage1?.addNode('/1-1');
+stage1?.addNode('/1-2');
+const stage2 = root.addNode('/stage 2').node;
+stage2?.addNode('/2-1');
+stage2?.addNode('/2-2');
+stage2?.addNode('/2-3');
+root.addNode('/stage 3');
 
-2. compile this module: npx tsc
+console.log(root.find('/1-2'));
+
+/*
+1 add this ts file to files array in tsconfig.json
+
+2. compile this module: npx tsc 
 */
