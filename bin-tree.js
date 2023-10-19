@@ -29,7 +29,8 @@ export class Node {
             return;
         if (this.value === value)
             return this;
-        return compare(this.value, value)
+        const isFirstGreaterThenLast = compare(this.value, value);
+        return isFirstGreaterThenLast
             ? this.left && this.left.find(value, compare)
             : this.right && this.right.find(value, compare);
     }
