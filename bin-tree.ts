@@ -59,40 +59,49 @@ export class Node {
     const rightChild = node.right;
     const leftChild = node.left;
 
-    // если узел не найден
+    // узел не найден
     if (!node) return;
 
-    // если узел не имеет левого и правого
+    // узел не имеет левого и правого
     if (node && leftChild === null && rightChild === null) {
       node === node.parent.right && (node.parent.right = null);
       node === node.parent.left && (node.parent.left = null);
     }
 
-    // если узел имеет только левый
+    // узел имеет только левый
     if (node && leftChild && rightChild === null) {
       node === node.parent.right && (node.parent.right = leftChild);
       node === node.parent.left && (node.parent.left = leftChild);
+      leftChild.parent = node.parent;
     }
 
-    // если узел имеет правый и имеет (или не имеет) левый
+    // узел имеет правый и имеет (или не имеет) левый
     if (node && rightChild) {
       node === node.parent.right && (node.parent.right = rightChild);
       node === node.parent.left && (node.parent.left = rightChild);
+      rightChild.parent = node.parent;
 
-      // если узел не имеет левый, тогда код ниже не выполнится
-      let leftNode = leftChild;
-      while (leftNode) {
-        leftNode = leftNode.left;
+      let nestedLeftNode = rightChild.left;
+
+      // есть левый и дочерний левый у правого
+      if (leftChild && nestedLeftNode) {
+        while (true) {
+          if (nestedLeftNode.left) {
+            nestedLeftNode = nestedLeftNode.left;
+          } else {
+            break;
+          }
+        }
+        nestedLeftNode.left = leftChild;
+        leftChild.parent = nestedLeftNode;
       }
-      leftNode && (leftNode.left = leftChild);
-    }
 
-    /*
-    if (node && rightChild && leftChild === null) {
-      node === node.parent.right && (node.parent.right = rightChild);
-      node === node.parent.left && (node.parent.left = rightChild);
+      // есть левый и нет дочернего левого у правого
+      if (leftChild && nestedLeftNode === null) {
+        rightChild.left = leftChild;
+        leftChild.parent = rightChild;
+      }
     }
-    */
 
     return node;
   }
@@ -135,4 +144,5 @@ const root = tree
   .add(24)
   .add(35);
 
-console.log(tree.remove(20));
+console.log(tree.remove(5));
+console.log(tree);
