@@ -10,28 +10,36 @@ export class Node {
     this.value = value;
   }
 
-  add(value: number, compare: Comparator): Node {
-    if (this.value === value) return this;
+  add(value: number, compare: Comparator) {
+    if (this.value === value) return;
 
     if (this.value === null) {
       this.value = value;
-      return this;
+      return;
     }
 
-    const node = new Node(value);
     const isFirstGreaterThenLast = compare(this.value, value);
+
     if (isFirstGreaterThenLast) {
-      this.left = node;
-    } else {
-      this.right = node;
+      if (!this.left) {
+        this.left = new Node(value);
+        return;
+      }
+      this.left.add(value, compare);
     }
-    return node;
+
+    if (!isFirstGreaterThenLast) {
+      if (!this.right) {
+        this.right = new Node(value);
+        return;
+      }
+      this.right.add(value, compare);
+    }
   }
 
   remove(value: number) {}
 
   find(value: number, compare: Comparator): Node | undefined {
-    console.log(this.value);
     if (this.value === null) return;
 
     if (this.value === value) return this;
@@ -53,7 +61,8 @@ export class Tree {
   }
 
   add(value: number) {
-    return this.root.add(value, this.comparator);
+    this.root.add(value, this.comparator);
+    return this;
   }
 
   remove(value: number) {
@@ -66,16 +75,6 @@ export class Tree {
 }
 
 const tree = new Tree();
-const root = tree.add(6);
+const root = tree.add(6).add(4).add(8).add(7).add(2).add(3).add(1);
 
-const stage1 = root.add(5, tree.comparator);
-stage1.add(4, tree.comparator);
-stage1.add(11, tree.comparator);
-
-const stage2 = root.add(7, tree.comparator);
-stage2.add(1, tree.comparator);
-stage2.add(8, tree.comparator);
-
-console.log(root);
-console.log(root.find(1, tree.comparator));
-//console.log(root.find(1, tree.comparator));
+console.log(root.find(3));
