@@ -31,14 +31,15 @@ export class Node {
   remove(value: number) {}
 
   find(value: number, compare: Comparator): Node | undefined {
+    console.log(this.value);
     if (this.value === null) return;
+
     if (this.value === value) return this;
+
     const isFirstGreaterThenLast = compare(this.value, value);
-    if (isFirstGreaterThenLast) {
-      this.left.find(value, compare);
-    } else {
-      this.right.find(value, compare);
-    }
+    return isFirstGreaterThenLast
+      ? this.left && this.left.find(value, compare)
+      : this.right && this.right.find(value, compare);
   }
 }
 
@@ -63,3 +64,18 @@ export class Tree {
     return this.root.find(value, this.comparator);
   }
 }
+
+const tree = new Tree();
+const root = tree.add(6);
+
+const stage1 = root.add(5, tree.comparator);
+stage1.add(4, tree.comparator);
+stage1.add(11, tree.comparator);
+
+const stage2 = root.add(7, tree.comparator);
+stage2.add(1, tree.comparator);
+stage2.add(8, tree.comparator);
+
+console.log(root);
+console.log(root.find(1, tree.comparator));
+//console.log(root.find(1, tree.comparator));

@@ -1,4 +1,4 @@
-import { Tree } from './tree.js';
+import { Tree } from './bin-tree.js';
 
 
 
