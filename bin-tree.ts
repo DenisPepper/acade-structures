@@ -11,14 +11,26 @@ export class Node {
   }
 
   add(value: number, compare: Comparator): Node {
-   
+    if (this.value === value) return this;
+
+    if (this.value === null) {
+      this.value = value;
+      return this;
+    }
+
+    const node = new Node(value);
+    const isFirstGreaterThenLast = compare(this.value, value);
+    if (isFirstGreaterThenLast) {
+      this.left = node;
+    } else {
+      this.right = node;
+    }
+    return node;
   }
 
   remove(value: number) {}
 
-  find(value: number, compare: Comparator): Node | undefined {
-    
-  }
+  find(value: number, compare: Comparator): Node | undefined {}
 }
 
 export class Tree {
