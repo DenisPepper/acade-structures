@@ -1,6 +1,8 @@
 type Comparator = (a: number, b: number) => boolean;
 type Value = number | null;
 
+const defaultCompare = (a: number, b: number) => a > b;
+
 export class Node {
   value: Value;
   left: Node;
@@ -55,7 +57,7 @@ export class Tree {
   root: Node;
   comparator: Comparator;
 
-  constructor(comparator: Comparator = (a, b) => a > b) {
+  constructor(comparator: Comparator = defaultCompare) {
     this.root = new Node(null);
     this.comparator = comparator;
   }
@@ -75,6 +77,17 @@ export class Tree {
 }
 
 const tree = new Tree();
-const root = tree.add(6).add(4).add(8).add(7).add(2).add(3).add(1);
+const root = tree
+  .add(6)
+  .add(4)
+  .add(2)
+  .add(5)
+  .add(20)
+  .add(14)
+  .add(12)
+  .add(16)
+  .add(30)
+  .add(24)
+  .add(35);
 
-console.log(root.find(3));
+console.log(tree);
