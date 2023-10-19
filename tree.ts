@@ -17,7 +17,7 @@ interface ITreeNode {
 type NodeType = INode | null;
 
 class Node implements INode {
-  children: INode[];
+  children: Node[];
   parent: NodeType;
   value: any;
 
@@ -66,7 +66,7 @@ class Node implements INode {
     }
   }
 
-  findByBreadth2(value: any): Node {
+  findByBreadth2(value: any): Node | undefined {
     if (this.value === value) return this;
     for (const child of this.children) {
       if (child.value === value) return child;
@@ -101,7 +101,7 @@ stage1?.addNode('/1-1');
 stage1?.addNode('/1-2');
 const stage2 = root.addNode('/stage 2').node;
 stage2?.addNode('/2-1');
-stage2?.addNode('/2-2').node.addNode('/2-2-1');
+stage2?.addNode('/2-2').node?.addNode('/2-2-1');
 stage2?.addNode('/2-3');
 root.addNode('/stage 3');
 
