@@ -30,7 +30,16 @@ export class Node {
 
   remove(value: number) {}
 
-  find(value: number, compare: Comparator): Node | undefined {}
+  find(value: number, compare: Comparator): Node | undefined {
+    if (this.value === null) return;
+    if (this.value === value) return this;
+    const isFirstGreaterThenLast = compare(this.value, value);
+    if (isFirstGreaterThenLast) {
+      this.left.find(value, compare);
+    } else {
+      this.right.find(value, compare);
+    }
+  }
 }
 
 export class Tree {
